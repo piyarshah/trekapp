@@ -31,30 +31,43 @@ st.markdown("""
 # Main title
 st.markdown('<div class="title">Yanam Offbeat</div>', unsafe_allow_html=True)
 
-# --- Define pickup orders and map links ---
-pickup_info = {
-    "Twin Valley Trek": {
-        "Borivali National Park Bus Stop": "https://maps.app.goo.gl/qzqduuLKv4hCz1jH9",
-        "JVLR": "https://goo.gl/maps/JMtCx4jS5voKcnKV6",
-        "IIT Bombay": "https://goo.gl/maps/QCHpG3Y8zjJttX2w8",
-        "Gandhinagar Junction Flyover": "https://goo.gl/maps/NLtzCNDeMFCerPEp7",
-        "Bhandup Pumping Station": "https://goo.gl/maps/8EkZb1jHN9sHJ6vk6",
-        "Rabale FOB": "https://maps.app.goo.gl/8HpgvAG5pFvfDujJ9",
-        "Ghansoli Station": "https://maps.app.goo.gl/f8Qdxh7V4DbBqaJe7",
-        "Lodha Xperia Mall Dombivili": "https://maps.app.goo.gl/2RvJJcPFanL5iFwm7",
-        "Mahanagar Gas AMBERNATH": "https://maps.app.goo.gl/xjSkq6MmPHdahqVQ7",
-        "Meeting the team directly at the base": ""
+pickup_points = {
+    "Nanemachi": {
+        "Mumbai": [
+            ("Teen Haath Naka, Thane", "https://maps.app.goo.gl/kUoHyc7B5kaJGWr8A"),
+            ("Viviana Mall", "https://maps.app.goo.gl/xFeT8WmGTMPKoPfb6"),
+            ("Majiwada Flyover Bus Stop", "https://maps.app.goo.gl/u8nrrdm5FufjUbyE9"),
+            ("Kasarvadavli", "https://maps.app.goo.gl/jVuZ2K1WkFV8miAp7"),
+            ("Bhayanderpada", "https://maps.app.goo.gl/Zfu8vjTosd17M8wJ9")
+        ]
     },
-    "Nanemachi Waterfall": {
-        "Borivali National Park Gate": "https://maps.app.goo.gl/qzqduuLKv4hCz1jH9",
-        "Gundavali Metro station": "",
-        "Ghatkopar bus depot": "https://maps.app.goo.gl/mhaRWfZVT8jxuAuh7",
-        "Ghatkopar Traffic Police Chowky": "",
-        "Chheda Ngr Junction Highway Chembur": "",
-        "Vashi Plaza": "",
-        "Below Turbeh Foot Over Bridge": "",
-        "DY Patil Nerul FOB": "",
-        "Meeting the team directly at the base": ""
+    "Twin Valley": {
+        "Mumbai": [
+            ("Teen Haath Naka, Thane", "https://maps.app.goo.gl/kUoHyc7B5kaJGWr8A"),
+            ("Viviana Mall", "https://maps.app.goo.gl/xFeT8WmGTMPKoPfb6"),
+            ("Majiwada Flyover Bus Stop", "https://maps.app.goo.gl/u8nrrdm5FufjUbyE9"),
+            ("Kasarvadavli", "https://maps.app.goo.gl/jVuZ2K1WkFV8miAp7"),
+            ("Bhayanderpada", "https://maps.app.goo.gl/Zfu8vjTosd17M8wJ9")
+        ]
+    },
+    "Steps of Paradise": {
+        "Mumbai": [
+            ("JVLR Chowk", "https://maps.app.goo.gl/5TxsbUUpg4ZcMcHJ6"),
+            ("IIT Bombay", "https://maps.app.goo.gl/jaQLjkoRCaCfvAJG6"),
+            ("Gandhinagar Junction", "https://maps.app.goo.gl/HFZjctLNFntNHxBVA"),
+            ("Bhandup Pumping Station (Airoli side)", "https://maps.app.goo.gl/tRLyzMKHp8tAoqDA8"),
+            ("Rabale Station FOB", "https://maps.app.goo.gl/WEA4UxxuQ4a5GjYx7"),
+            ("Ghansoli Station (towards shilphata road)", "https://maps.app.goo.gl/fM4k2Rx95eWtxckq5"),
+            ("Xperia Mall (Dombivili)", "https://maps.app.goo.gl/cKmWTv6r6oKHXnVe7")
+        ],
+        "Pune": [
+            ("Safire Park Galleria", "https://maps.app.goo.gl/qJ3U8BHp1DpgPaai6"),
+            ("Wakdewadi New Bus Stand", "https://maps.app.goo.gl/LhDZWqEHYNgPGHY56"),
+            ("Bopodi Jakat Naka", "https://maps.app.goo.gl/mH9qvqPSzmD9y3Mf6"),
+            ("Nashik Bus Stop - Nashik Phata", "https://maps.app.goo.gl/Z6sJUV5G8syRhqUo6"),
+            ("Tata Motors Cars Showroom (Bhosari)", "https://maps.app.goo.gl/5GbUoywBPJXyZ86C8"),
+            ("Lakshmi Energy & Fuel", "https://maps.app.goo.gl/TYB2dCVnAdboUK1t9")
+        ]
     }
 }
 
