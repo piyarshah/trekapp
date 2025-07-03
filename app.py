@@ -133,7 +133,7 @@ if st.session_state.page == "home":
 if st.session_state.page == "summary":
     if st.button("← Back"):
         st.session_state.page = "view"  # or "home", depending on where you want to return
-        st.experimental_rerun()
+        # Removed st.experimental_rerun()
 
     trek = st.session_state.participant_data["trek"]
     participants = st.session_state.participant_data["participants"]
