@@ -142,7 +142,7 @@ if st.session_state.page == "summary":
         location_links = pickup_info[trek]
 
     total_participants = sum(len(v) for v in participants.values())
-    st.markdown(f"**Total Participants:** {total_participants}**")
+    st.markdown(f"Total Participants: {total_participants}")
 
     st.markdown('<div class="section-title">Pickup Locations</div>', unsafe_allow_html=True)
 
@@ -152,15 +152,24 @@ if st.session_state.page == "summary":
     else:
         pickup_order = list(pickup_info[trek].keys())
 
+    full_text = f"Total Participants: {total_participants}\n\n"
+
     for location in pickup_order:
         if location in participants:
             people = participants[location]
             loc_url = location_links.get(location, "")
-            display_text = f"{location} ({len(people)})"
             if loc_url:
-                st.markdown(f"- [{display_text}]({loc_url})")
+                st.markdown(f"- [{location}]({loc_url}) ({len(people)})")
+                full_text += f"{location} ({len(people)}):\n"
             else:
-                st.markdown(f"- {display_text}")
-            with st.expander(f"View Participants at {location}"):
-                for person in people:
-                    st.markdown(f"- {person}")
+                st.markdown(f"- {location} ({len(people)})")
+                full_text += f"{location} ({len(people)}):\n"
+            for person in people:
+                st.checkbox(person, value=False, key=f"{location}_{person}")
+                full_text += f"  - {person}\n"
+            full_text += "\n"
+
+    # --- Copy to Clipboard ---
+    if total_participants > 0:
+        st.markdown("#### Copy Participant List")
+        st.code(full_text, language="text")
