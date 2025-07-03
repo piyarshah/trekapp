@@ -168,8 +168,3 @@ if st.session_state.page == "summary":
                 st.checkbox(person, value=False, key=f"{location}_{person}")
                 full_text += f"  - {person}\n"
             full_text += "\n"
-
-    # --- Copy to Clipboard ---
-    if total_participants > 0:
-        st.markdown("#### Copy Participant List")
-        st.code(full_text, language="text")
