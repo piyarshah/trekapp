@@ -31,6 +31,7 @@ st.markdown("""
 # Main title
 st.markdown('<div class="title">Yanam Offbeat</div>', unsafe_allow_html=True)
 
+# Pickup location links
 pickup_info = {
     "Twin Valley Trek": {
         "Borivali National Park Bus Stop": "https://maps.app.goo.gl/qzqduuLKv4hCz1jH9",
@@ -55,7 +56,6 @@ pickup_info = {
         "DY Patil Nerul FOB": "https://maps.app.goo.gl/C1GbhEFLg3M9DrY68",
         "Meeting the team directly at the base": ""
     },
-
     "Steps of Paradise": {
         "Mumbai": [
             ("JVLR Chowk", "https://maps.app.goo.gl/5TxsbUUpg4ZcMcHJ6"),
@@ -77,50 +77,22 @@ pickup_info = {
     }
 }
 
-
+# --- Home Page ---
 if st.session_state.page == "home":
-
-    st.markdown("""
-        <div class="section-title" style="margin-bottom: 0px;">Select City</div>
-    """, unsafe_allow_html=True)
-
+    st.markdown('<div class="section-title" style="margin-bottom: 0px;">Select City</div>', unsafe_allow_html=True)
     selected_city = st.selectbox("", ["Select", "Mumbai", "Pune"])
 
     if selected_city == "Mumbai":
-        st.markdown("""
-            <div class="section-title" style="margin-bottom: 0px;">Select Trek</div>
-        """, unsafe_allow_html=True)
-
-        trek_names = [
-            "Nanemachi Waterfall",
-            "Twin Valley Trek"
-        ]
+        st.markdown('<div class="section-title" style="margin-bottom: 0px;">Select Trek</div>', unsafe_allow_html=True)
+        trek_names = ["Nanemachi Waterfall", "Twin Valley Trek", "Steps of Paradise"]
         selected_trek = st.selectbox("", ["Select"] + trek_names)
 
         if selected_trek != "Select":
-            # Section: Upload sheet
-            st.markdown("""
-                <div class="section-title" style="margin-top: 24px; margin-bottom: 20px;">
-                    Upload the Google Sheet
-                </div>
-            """, unsafe_allow_html=True)
+            st.markdown('<div class="section-title" style="margin-top: 24px; margin-bottom: 20px;">Upload the Google Sheet</div>', unsafe_allow_html=True)
+            uploaded_file = st.file_uploader("Upload the Google Sheet", type=["csv", "xlsx"], help="Upload the sheet you downloaded from Google Forms", label_visibility="collapsed")
 
-            uploaded_file = st.file_uploader(
-                label="Upload the Google Sheet",
-                type=["csv", "xlsx"],
-                help="Upload the sheet you downloaded from Google Forms",
-                label_visibility="collapsed",
-                accept_multiple_files=False
-            )
-
-            # --- Process uploaded file ---
             if uploaded_file:
-                if uploaded_file.name.endswith(".csv"):
-                    df = pd.read_csv(uploaded_file)
-                else:
-                    df = pd.read_excel(uploaded_file)
-
-                # Identify required columns
+                df = pd.read_csv(uploaded_file) if uploaded_file.name.endswith(".csv") else pd.read_excel(uploaded_file)
                 name_col = next((col for col in df.columns if "name" in col.lower()), None)
                 phone_col = next((col for col in df.columns if "whatsapp" in col.lower()), None)
                 pickup_col = next((col for col in df.columns if "pickup" in col.lower()), None)
@@ -128,10 +100,8 @@ if st.session_state.page == "home":
                 if not all([name_col, phone_col, pickup_col]):
                     st.error("Could not identify required columns in the sheet.")
                 else:
-                    # Sort participants by their pickup stop
                     pickup_order = list(pickup_info[selected_trek].keys())
                     participants = {}
-
                     for _, row in df.iterrows():
                         pickup_raw = str(row[pickup_col])
                         matched_stop = next((stop for stop in pickup_order if stop.lower() in pickup_raw.lower()), "Other")
@@ -146,13 +116,42 @@ if st.session_state.page == "home":
                     st.rerun()
 
     elif selected_city == "Pune":
-        st.info("Pickup info for Pune treks is not yet available. Please check back later.")
+        trek_names = ["Steps of Paradise"]
+        st.markdown('<div class="section-title" style="margin-bottom: 0px;">Select Trek</div>', unsafe_allow_html=True)
+        selected_trek = st.selectbox("", ["Select"] + trek_names)
+
+        if selected_trek != "Select":
+            st.markdown('<div class="section-title" style="margin-top: 24px; margin-bottom: 20px;">Upload the Google Sheet</div>', unsafe_allow_html=True)
+            uploaded_file = st.file_uploader("Upload the Google Sheet", type=["csv", "xlsx"], help="Upload the sheet you downloaded from Google Forms", label_visibility="collapsed")
+
+            if uploaded_file:
+                df = pd.read_csv(uploaded_file) if uploaded_file.name.endswith(".csv") else pd.read_excel(uploaded_file)
+                name_col = next((col for col in df.columns if "name" in col.lower()), None)
+                phone_col = next((col for col in df.columns if "whatsapp" in col.lower()), None)
+                pickup_col = next((col for col in df.columns if "pickup" in col.lower()), None)
+
+                if not all([name_col, phone_col, pickup_col]):
+                    st.error("Could not identify required columns in the sheet.")
+                else:
+                    pickup_order = [x[0] for x in pickup_info[selected_trek]["Pune"]]
+                    participants = {}
+                    for _, row in df.iterrows():
+                        pickup_raw = str(row[pickup_col])
+                        matched_stop = next((stop for stop in pickup_order if stop.lower() in pickup_raw.lower()), "Other")
+                        entry = f"{row[name_col]} – {row[phone_col]}"
+                        participants.setdefault(matched_stop, []).append(entry)
+
+                    st.session_state.participant_data = {
+                        "trek": selected_trek,
+                        "participants": participants
+                    }
+                    st.session_state.page = "summary"
+                    st.rerun()
 
 # --- Summary Page ---
 if st.session_state.page == "summary":
     trek = st.session_state.participant_data["trek"]
     participants = st.session_state.participant_data["participants"]
-    pickup_order = list(pickup_info[trek].keys())
 
     # Back button
     if st.button("⬅ Back"):
@@ -162,16 +161,28 @@ if st.session_state.page == "summary":
     total = sum(len(lst) for lst in participants.values())
     st.markdown(f"### Total Participants: {total}")
 
+    # Determine pickup_order properly
+    if trek == "Steps of Paradise":
+        selected_city = None
+        # Infer city from the keys
+        if all(stop in dict(pickup_info[trek]["Mumbai"]).keys() for stop in participants.keys()):
+            selected_city = "Mumbai"
+        elif all(stop in dict(pickup_info[trek]["Pune"]).keys() for stop in participants.keys()):
+            selected_city = "Pune"
+        else:
+            selected_city = "Mumbai"  # default/fallback
+
+        pickup_order = [x[0] for x in pickup_info[trek][selected_city]]
+        link_dict = dict(pickup_info[trek][selected_city])
+    else:
+        pickup_order = list(pickup_info[trek].keys())
+        link_dict = pickup_info[trek]
+
     for stop in pickup_order:
         entries = participants.get(stop, [])
         if entries:
-            map_link = pickup_info[trek][stop]
+            map_link = link_dict.get(stop, "")
+            st.markdown(f"#### {stop}")
             if map_link:
-                st.markdown(f"**[{stop}]({map_link})** ({len(entries)})", unsafe_allow_html=True)
-            else:
-                st.markdown(f"**{stop}** ({len(entries)})")
-            for person in entries:
-                st.checkbox(person, key=f"{stop}_{person}")
-
-
-
+                st.markdown(f"[Location]({map_link})", unsafe_allow_html=True)
+            st.markdown("<br>".join(entries), unsafe_allow_html=True)
