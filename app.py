@@ -59,13 +59,13 @@ pickup_info = {
 
     "Steps of Paradise": {
         "Mumbai": {
-            "JVLR Chowk": "https://maps.app.goo.gl/5TxsbUUpg4ZcMcHJ6",
-            "IIT Bombay": "https://maps.app.goo.gl/jaQLjkoRCaCfvAJG6",
-            "Gandhinagar Junction": "https://maps.app.goo.gl/HFZjctLNFntNHxBVA",
-            "Bhandup Pumping Station (Airoli side)": "https://maps.app.goo.gl/tRLyzMKHp8tAoqDA8",
-            "Rabale Station FOB": "https://maps.app.goo.gl/WEA4UxxuQ4a5GjYx7",
-            "Ghansoli Station (towards Shilphata road)": "https://maps.app.goo.gl/fM4k2Rx95eWtxckq5",
-            "Xperia Mall (Dombivili)": "https://maps.app.goo.gl/cKmWTv6r6oKHXnVe7",
+            "JVLR Chowk": "https://maps.app.goo.gl/SrNE8T8RuFGnDYVk9",
+            "IIT Bombay": "https://maps.app.goo.gl/fq49XEd4yc8YZ45h7",
+            "Gandhinagar Junction": "https://maps.app.goo.gl/hXuNM5TRC7UHZ5Lf7",
+            "Bhandup Pumping Station (Airoli side)": "https://maps.app.goo.gl/FB1uD6c4YeGgbu259",
+            "Rabale Station FOB": "https://maps.app.goo.gl/keDL31AvPvFmGrbTA",
+            "Ghansoli Station (towards Shilphata road)": "https://maps.app.goo.gl/iBnuJfM9rKK6coNLA",
+            "Xperia Mall (Dombivili)": "https://maps.app.goo.gl/J1mGnK7h5GZuA6Ng7",
             "Meeting the team directly at the base": ""
         },
         "Pune": {
