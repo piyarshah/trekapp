@@ -142,16 +142,25 @@ if st.session_state.page == "summary":
         location_links = pickup_info[trek]
 
     total_participants = sum(len(v) for v in participants.values())
-    st.markdown(f"**Total Participants:** {total_participants}")
+    st.markdown(f"**Total Participants:** {total_participants}**")
 
-    for location, people in participants.items():
-        loc_url = location_links.get(location, "")
-        display_text = f"{location} ({len(people)})"
-        if loc_url:
-            st.markdown(f"[{location}](<{loc_url}>) ({len(people)})", unsafe_allow_html=True)
-        else:
-            st.markdown(f"**{location}** ({len(people)})")
+    st.markdown('<div class="section-title">Pickup Locations</div>', unsafe_allow_html=True)
 
-        for person in people:
-            st.markdown(f"- {person}")
+    # Sort locations according to order in pickup_info
+    if trek == "Steps of Paradise":
+        pickup_order = list(pickup_info[trek][city].keys())
+    else:
+        pickup_order = list(pickup_info[trek].keys())
 
+    for location in pickup_order:
+        if location in participants:
+            people = participants[location]
+            loc_url = location_links.get(location, "")
+            display_text = f"{location} ({len(people)})"
+            if loc_url:
+                st.markdown(f"- [{display_text}]({loc_url})")
+            else:
+                st.markdown(f"- {display_text}")
+            with st.expander(f"View Participants at {location}"):
+                for person in people:
+                    st.markdown(f"- {person}")
