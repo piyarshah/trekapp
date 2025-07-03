@@ -142,9 +142,7 @@ if st.session_state.page == "summary":
         location_links = pickup_info[trek]
 
     total_participants = sum(len(v) for v in participants.values())
-    st.markdown(f"Total Participants: {total_participants}")
-
-    st.markdown('<div class="section-title">Pickup Locations</div>', unsafe_allow_html=True)
+    st.markdown(f"<h3 style='font-size:28px;'>Total Participants: {total_participants}</h3>", unsafe_allow_html=True)
 
     # Sort locations according to order in pickup_info
     if trek == "Steps of Paradise":
