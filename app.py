@@ -66,7 +66,7 @@ pickup_info = {
             "Ghatkopar Bus Depot": "https://maps.app.goo.gl/mhaRWfZVT8jxuAuh7",
             "Ghatkopar Traffic Police Chowky": "https://maps.app.goo.gl/vHzm6eRPXWgxZwv48",
             "Chheda Nagar Junction Highway Chembur": "https://maps.app.goo.gl/7QmKtbjhK2SXXrRx6",
-            "Makhurd ST Stand": "https://maps.app.goo.gl/szrxfHjQwteRfYZJ9",
+            "Mankhurd ST Stand": "https://maps.app.goo.gl/szrxfHjQwteRfYZJ9",
             "Ibis Turbeh": "https://maps.app.goo.gl/5cvoDcAMGspjAyEDA",
             "Ghansoli FOB (towards Shilphata road)": "https://maps.app.goo.gl/iBnuJfM9rKK6coNLA",
             "Xperia Mall (Dombivili)": "https://maps.app.goo.gl/J1mGnK7h5GZuA6Ng7",
